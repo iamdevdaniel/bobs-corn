@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "name": "danielm-bobs-corn",
+  "version": "1.0.0",
+  "description": "A service for selling corn",
+  "main": "service.js",
+  "scripts": {
+    "start": "node service.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
