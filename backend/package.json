@@ -1,9 +1,7 @@
 {
-  "type": "module",
-  "name": "danielm-bobs-corn",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "A service for selling corn",
-  "main": "service.js",
+  "type": "module",
   "scripts": {
     "start": "node service.js"
   },
