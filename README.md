@@ -28,7 +28,18 @@ This project utilizes a monorepo structure for simplified development:
 
 ## 3 - Project Overview
 
-This project manages a corn marketplace where users can switch between clients, view available and purchased corn, and make purchases. The frontend handles user interactions and state management, while the backend provides APIs for data storage and processing.
+This project is a corn marketplace where users can switch clients, view/buy corn, and track purchases. The frontend manages interactions and state, while the backend handles APIs and data storage.
+
+SQLite with the following tables:
+
+| Table         | Columns                     | Description                     |
+|---------------|-----------------------------|---------------------------------|
+| `corn_stock`  | `available_units` (INTEGER) | Tracks the available corn stock |
+| `purchases`   | `client_id` (TEXT), `timestamp` (DATETIME), `quantity` (INTEGER) | Logs client purchases           |
+
+The frontend allows switching between pre-registered clients and displays the total corn stock (`corn_stock`) and the quantity each client has purchased (`purchases`).
+
+When a client attempts a purchase, the backend service checks if the time since their last purchase exceeds the allowed time window. If valid, the purchase is processed; otherwise, an error is returned.
 
 ## 4 - Future Improvements
 
@@ -45,3 +56,9 @@ This project manages a corn marketplace where users can switch between clients, 
 ### Both
 - Standardize code styling using Biome
 - Implement path aliases for improved code organization
+
+## 5 - Demo
+
+[Watch the demo video here](https://jam.dev/c/059ed37e-37a0-488b-b29a-21cd0de587d3).
+
+Note: For the purpose of the demo, the allowed time window between purchases was reduced to 10 seconds.
