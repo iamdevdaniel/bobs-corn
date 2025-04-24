@@ -21,7 +21,7 @@ export const initializeApp = async () => {
 
 export const getClientInfo = async (clientId) => {
   const lastPurchase = await getLastPurchase(clientId)
-  const userTotalCorn = lastPurchase ? lastPurchase.quantity : 0
+  const userTotalCorn = lastPurchase && lastPurchase.quantity ? lastPurchase.quantity : 0
   const availableCorn = await getAvailableCorn()
 
   return {

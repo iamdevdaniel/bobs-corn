@@ -23,10 +23,15 @@ function App() {
   }
 
   useEffect(() => {
-    apiGetUserInfo('client1')
+    apiGetUserInfo(CLIENTS.client1.id)
   }, [])
+  
 
-  console.log(selectedClientId)
+  useEffect(() => {
+    apiGetUserInfo(selectedClientId)
+  }, [selectedClientId])
+
+console.log(selectedClientId, cornQty.userTotalCorn)
 
   return (
     <div className="w-full h-full p-10">

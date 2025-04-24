@@ -74,10 +74,22 @@ export const decrementCorn = async () => {
 }
 
 export const insertPurchase = async (clientId, timestamp, quantity) => {
-  await dbRun(
-    `INSERT INTO purchases (client_id, timestamp, quantity) VALUES (?, ?, ?)`,
-    [clientId, timestamp, quantity]
+  const existingRow = await dbGet(
+    `SELECT client_id FROM purchases WHERE client_id = ? LIMIT 1`,
+    [clientId]
   )
+
+  if (existingRow) {
+    await dbRun(
+      `UPDATE purchases SET timestamp = ?, quantity = ? WHERE client_id = ?`,
+      [timestamp, quantity, clientId]
+    )
+  } else {
+    await dbRun(
+      `INSERT INTO purchases (client_id, timestamp, quantity) VALUES (?, ?, ?)`,
+      [clientId, timestamp, quantity]
+    )
+  }
 }
 
 export const getAvailableCorn = async () => {
