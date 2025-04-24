@@ -1,6 +1,6 @@
-import { create } from 'zustand'
-import { type CornData, type RequestStatus, API_STATUS } from './types'
-import { getClientInfo } from './api'
+import { create } from "zustand"
+import { type CornData, type RequestStatus, API_STATUS } from "./types"
+import { getClientInfo } from "./api"
 
 type StoreProps = {
   cornQty: CornData

@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import {
   AppError,
   makePurchase,
@@ -8,6 +9,8 @@ import {
 
 const app = express()
 const PORT = 3013
+
+app.use(cors())
 app.use(express.json())
 
 const startServer = async () => {
