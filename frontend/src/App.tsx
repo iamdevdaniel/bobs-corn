@@ -47,8 +47,7 @@ function App() {
     if (apiMakePurchaseStatus.ERROR) {
       toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "Can't make reqeusts that fast.",
+        title: "Slow down! You're buying too quickly.",
       })
     }
   }, [apiMakePurchaseStatus.ERROR])
