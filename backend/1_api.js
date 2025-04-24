@@ -2,6 +2,7 @@ import express from 'express'
 import {
   AppError,
   makePurchase,
+  getClientInfo,
   initializeApp,
 } from './2_services.js'
 
