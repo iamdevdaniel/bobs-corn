@@ -40,6 +40,7 @@ This project manages a corn marketplace where users can switch between clients, 
 - Fix toast notification timeout issues
 - Add loading spinner for improved user feedback
 - Implement individual countdown timers per user
+- Refactor the App file by extracting useState and useEffect logic into custom hooks
 
 ### Both
 - Standardize code styling using Biome
