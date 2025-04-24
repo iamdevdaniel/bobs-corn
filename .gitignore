@@ -1,5 +1,6 @@
 # BACKEND
 node_modules/
+*/**/*.db
 .env
 dist/
 build/
