@@ -4,7 +4,7 @@ import { Button } from "./components"
 
 function App() {
 
-  const { apiGetUserInfo, cornQty } = useCornStore()
+  const { apiGetUserInfo } = useCornStore()
 
   useEffect(() => {
     apiGetUserInfo('client1')
