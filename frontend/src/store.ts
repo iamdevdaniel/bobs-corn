@@ -18,8 +18,8 @@ const defaultState: StoreProps = {
     availableCorn: 0,
     userTotalCorn: 0,
   },
-  apiGetUserInfoStatus: API_STATUS.SUCCESS,
-  apiMakePurchaseStatus: API_STATUS.SUCCESS,
+  apiGetUserInfoStatus: API_STATUS.IDLE,
+  apiMakePurchaseStatus: API_STATUS.IDLE,
 }
 
 export const useCornStore = create<StoreProps & StoreActions>((set) => ({
