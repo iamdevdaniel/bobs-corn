@@ -1,4 +1,5 @@
 import {
+  initDb,
   getAvailableCorn,
   getLastPurchase,
   insertPurchase,
@@ -13,6 +14,10 @@ export class AppError extends Error {
 }
 
 const PURCHASE_COOLDOWN_MS = 10000
+
+export const initializeApp = async () => {
+  await initDb()
+}
 
 export const makePurchase = async (clientId) => {
   const lastPurchase = await getLastPurchase(clientId)

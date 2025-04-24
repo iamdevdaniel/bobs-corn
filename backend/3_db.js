@@ -1,46 +1,51 @@
-import sqlite3 from 'sqlite3'
-import { promisify } from 'util'
-
-const DB_PATH = './corn.db'
-const db = new sqlite3.Database(DB_PATH)
+import sqlite3 from "sqlite3"
+import { promisify } from "util"
 
 export const initDb = () => {
-  db.serialize(() => {
-    db.run(
-      `CREATE TABLE IF NOT EXISTS corn_stock (
-        available_units INTEGER
-      )`,
-      () => {
-        db.get(`SELECT COUNT(*) as count FROM corn_stock`, (_, row) => {
-          if (row.count === 0) {
-            db.run(`INSERT INTO corn_stock (available_units) VALUES (100)`)
-          }
-        })
-      }
-    )
-    db.run(`
-      CREATE TABLE IF NOT EXISTS purchases (
-        client_id TEXT,
-        timestamp DATETIME,
-        quantity INTEGER
-    )`,
-      () => {
-        const defaultClients = ['client1', 'client2', 'client3']
-        defaultClients.forEach(clientId => {
-          db.run(
-            `INSERT INTO purchases (client_id, timestamp, quantity) VALUES (?, ?, ?)`,
-            [clientId, null, 0]
-          )
-        })
-      }
-    )
+  return new Promise((resolve, reject) => {
+    db.serialize(() => {
+      db.run(
+        `
+        CREATE TABLE IF NOT EXISTS corn_stock (
+          available_units INTEGER
+        )`,
+        (err) => {
+          if (err) return reject(err)
+          db.get(`SELECT COUNT(*) as count FROM corn_stock`, (_, row) => {
+            if (row.count === 0) {
+              db.run(
+                `INSERT INTO corn_stock (available_units) VALUES (100)`,
+                (err) => {
+                  if (err) return reject(err)
+                  resolve()
+                }
+              )
+            } else {
+              resolve()
+            }
+          })
+        }
+      )
+
+      db.run(
+        `
+        CREATE TABLE IF NOT EXISTS purchases (
+          client_id TEXT,
+          timestamp DATETIME,
+          quantity INTEGER
+        )`,
+        (err) => {
+          if (err) return reject(err)
+        }
+      )
+    })
   })
 }
 
 const dbGet = promisify(db.get.bind(db))
 const dbRun = promisify(db.run.bind(db))
 
-export const getLastPurchase = async clientId => {
+export const getLastPurchase = async (clientId) => {
   const row = await dbGet(
     `SELECT timestamp, quantity FROM purchases WHERE client_id = ? ORDER BY timestamp DESC LIMIT 1`,
     [clientId]

@@ -1,10 +1,18 @@
 import express from 'express'
-import { AppError } from './2_services'
+import {
+  AppError,
+  makePurchase,
+  initializeApp,
+} from './2_services'
 
 const app = express()
 const PORT = 3013
-
 app.use(express.json())
+
+const startServer = async () => {
+  await initializeApp()
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+}
 
 app.post('/purchase', async (req, res) => {
   const { clientId } = req.body
@@ -21,6 +29,4 @@ app.post('/purchase', async (req, res) => {
   }
 })
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+startServer()
