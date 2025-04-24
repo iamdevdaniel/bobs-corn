@@ -44,3 +44,14 @@ export const makePurchase = async (clientId) => {
     userTotalCorn,
   }
 }
+
+export const getClientInfo = async (clientId) => {
+  const lastPurchase = await getLastPurchase(clientId)
+  const userTotalCorn = lastPurchase ? lastPurchase.quantity : 0
+  const availableCorn = await getAvailableCorn()
+
+  return {
+    availableCorn,
+    userTotalCorn,
+  }
+}

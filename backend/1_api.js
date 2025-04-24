@@ -14,8 +14,8 @@ const startServer = async () => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 }
 
-app.post('/purchase', async (req, res) => {
-  const { clientId } = req.body
+app.patch('/clients/:clientId/purchases', async (req, res) => {
+  const { clientId } = req.params
 
   try {
     const result = await makePurchase(clientId)
@@ -26,6 +26,21 @@ app.post('/purchase', async (req, res) => {
     } else {
       res.status(500).json({ error: 'Internal server error' })
     } 
+  }
+})
+
+app.get('/clients/:clientId', async (req, res) => {
+  const { clientId } = req.params
+
+  try {
+    const result = await getClientInfo(clientId)
+    res.status(200).json(result)
+  } catch (error) {
+    if (error instanceof AppError) {
+      res.status(error.statusCode).json({ error: error.message })
+    } else {
+      res.status(500).json({ error: 'Internal server error' })
+    }
   }
 })
 
