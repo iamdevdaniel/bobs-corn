@@ -13,7 +13,7 @@ export class AppError extends Error {
   }
 }
 
-const PURCHASE_COOLDOWN_MS = 10000
+const PURCHASE_COOLDOWN_MS = 60000
 
 export const initializeApp = async () => {
   await initDb()

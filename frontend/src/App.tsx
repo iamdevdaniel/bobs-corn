@@ -26,6 +26,7 @@ function App() {
   const { toast } = useToast()
   const [switchStates, setSwitchStates] = useState<boolean[]>([true, false, false])
   const [selectedClientId, setSelectedClientId] = useState<string>(CLIENTS.client1.id)
+  const selectedClient = Object.values(CLIENTS).find(client => client.id === selectedClientId)
 
   const handleSwitchChange = (index: number, clientId: string) => {
     setSwitchStates(prev => {
@@ -47,10 +48,19 @@ function App() {
     if (apiMakePurchaseStatus.ERROR) {
       toast({
         variant: "destructive",
-        title: "Slow down! You're buying too quickly.",
+        title: `${selectedClient?.label} you're buying too quickly`,
       })
     }
   }, [apiMakePurchaseStatus.ERROR])
+
+  useEffect(() => {
+    if (apiMakePurchaseStatus.SUCCESS) {
+      toast({
+        variant: "success",
+        title: `Thank you ${selectedClient?.label} for your purchase`,
+      })
+    }
+  }, [apiMakePurchaseStatus.SUCCESS])
 
   return (
     <div className="w-full h-full p-10">
