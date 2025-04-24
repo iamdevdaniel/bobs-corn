@@ -10,7 +10,11 @@ const CLIENTS = {
 
 function App() {
 
-  const { apiGetUserInfo, cornQty } = useCornStore()
+  const {
+    apiGetUserInfo,
+    apiMakePurchase,
+    cornQty
+  } = useCornStore()
   const [switchStates, setSwitchStates] = useState<boolean[]>([true, false, false])
   const [selectedClientId, setSelectedClientId] = useState<string>(CLIENTS.client1.id)
 
@@ -25,13 +29,10 @@ function App() {
   useEffect(() => {
     apiGetUserInfo(CLIENTS.client1.id)
   }, [])
-  
 
   useEffect(() => {
     apiGetUserInfo(selectedClientId)
   }, [selectedClientId])
-
-console.log(selectedClientId, cornQty.userTotalCorn)
 
   return (
     <div className="w-full h-full p-10">
@@ -60,7 +61,12 @@ console.log(selectedClientId, cornQty.userTotalCorn)
             value={cornQty.userTotalCorn}
             iconSrc="/single_corn.png"
           />
-          <Button className="w-full mt-2">Buy</Button>
+          <Button
+            onClick={() => apiMakePurchase(selectedClientId)}
+            className="w-full mt-2"
+          >
+            Buy
+          </Button>
         </Card>
       </section>
     </div>
