@@ -13,12 +13,14 @@
 This project utilizes a monorepo structure for simplified development:
 
 ### Backend
+- Entry point: `1_api.js`
 - Data: SQLite
 - Service: Vanilla JavaScript
 - API: Express.js
 - Data -> Service -> API
 
 ### Frontend
+- Entry point: `main.tsx`
 - API: Axios
 - State management: Zustand
 - Presentation: React + TypeScript + Tailwind CSS + Shadcn
