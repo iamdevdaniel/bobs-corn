@@ -3,7 +3,7 @@ import {
   AppError,
   makePurchase,
   initializeApp,
-} from './2_services'
+} from './2_services.js'
 
 const app = express()
 const PORT = 3013

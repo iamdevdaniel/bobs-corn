@@ -1,6 +1,8 @@
 import sqlite3 from "sqlite3"
 import { promisify } from "util"
 
+const db = new sqlite3.Database('./corn.db')
+
 export const initDb = () => {
   return new Promise((resolve, reject) => {
     db.serialize(() => {
@@ -36,6 +38,20 @@ export const initDb = () => {
         )`,
         (err) => {
           if (err) return reject(err)
+          db.get(`SELECT COUNT(*) as count FROM purchases`, (_, row) => {
+            if (row.count === 0) {
+              db.run(
+                `INSERT INTO purchases (client_id, timestamp, quantity) 
+                 VALUES 
+                 ('client1', NULL, NULL), 
+                 ('client2', NULL, NULL), 
+                 ('client3', NULL, NULL)`,
+                (err) => {
+                  if (err) return reject(err)
+                }
+              )
+            }
+          })
         }
       )
     })
