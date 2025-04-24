@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react"
 import { useCornStore } from "./store"
-import { Button, ClientSwitch, Card, CornDataRow } from "./components"
+import {
+  Button,
+  ClientSwitch,
+  Card,
+  CornDataRow,
+  Toaster,
+  useToast,
+} from "./components"
 
 const CLIENTS = {
   client1: { id: 'client1', label: 'Client 1' },
@@ -13,8 +20,10 @@ function App() {
   const {
     apiGetUserInfo,
     apiMakePurchase,
+    apiMakePurchaseStatus,
     cornQty
   } = useCornStore()
+  const { toast } = useToast()
   const [switchStates, setSwitchStates] = useState<boolean[]>([true, false, false])
   const [selectedClientId, setSelectedClientId] = useState<string>(CLIENTS.client1.id)
 
@@ -34,9 +43,20 @@ function App() {
     apiGetUserInfo(selectedClientId)
   }, [selectedClientId])
 
+  useEffect(() => {
+    if (apiMakePurchaseStatus.ERROR) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "Can't make reqeusts that fast.",
+      })
+    }
+  }, [apiMakePurchaseStatus.ERROR])
+
   return (
     <div className="w-full h-full p-10">
       <section className="flex gap-5 min-h-[160px]">
+        <Toaster />
         <Card className="p-7 basis-1/3 flex flex-col items-center justify-between">
           {
             Object.values(CLIENTS).map((client, index) => (
