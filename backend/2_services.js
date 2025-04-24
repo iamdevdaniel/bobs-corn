@@ -19,6 +19,17 @@ export const initializeApp = async () => {
   await initDb()
 }
 
+export const getClientInfo = async (clientId) => {
+  const lastPurchase = await getLastPurchase(clientId)
+  const userTotalCorn = lastPurchase ? lastPurchase.quantity : 0
+  const availableCorn = await getAvailableCorn()
+
+  return {
+    availableCorn,
+    userTotalCorn,
+  }
+}
+
 export const makePurchase = async (clientId) => {
   const lastPurchase = await getLastPurchase(clientId)
   const lastPurchaseTime = lastPurchase ? new Date(lastPurchase.timestamp).getTime() : 0
@@ -41,17 +52,6 @@ export const makePurchase = async (clientId) => {
 
   return {
     availableCorn: availableCorn - 1,
-    userTotalCorn,
-  }
-}
-
-export const getClientInfo = async (clientId) => {
-  const lastPurchase = await getLastPurchase(clientId)
-  const userTotalCorn = lastPurchase ? lastPurchase.quantity : 0
-  const availableCorn = await getAvailableCorn()
-
-  return {
-    availableCorn,
     userTotalCorn,
   }
 }
