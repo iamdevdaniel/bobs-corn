@@ -1,4 +1,4 @@
-# Bobs Corn 🌽
+# Bob's Corn 🌽
 
 ## 1 - Getting Started
 
